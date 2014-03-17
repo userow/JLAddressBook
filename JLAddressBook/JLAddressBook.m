@@ -21,7 +21,7 @@ static const int JLAddressBookLogLevel = LOG_LEVEL_ERROR;
 
 @interface JLAddressBook ()
 @property(nonatomic, strong) NSRegularExpression *regex;
-@property(nonatomic, strong) id<JLContactManager> contactFactory;
+@property(nonatomic, strong) id<JLContactManager> contactManager;
 @end
 
 @implementation JLAddressBook
@@ -39,7 +39,7 @@ static const int JLAddressBookLogLevel = LOG_LEVEL_ERROR;
   return _instance;
 }
 
-- (instancetype)initWithContactFactory:(id<JLContactManager>)contactFactory {
+- (instancetype)initWithContactManager:(id<JLContactManager>)contactManager {
   self = [super init];
   if (self) {
     NSError *error = nil;
@@ -51,7 +51,7 @@ static const int JLAddressBookLogLevel = LOG_LEVEL_ERROR;
       self = nil;
       return nil;
     }
-    self.contactFactory = contactFactory;
+    self.contactManager = contactManager;
   }
   return self;
 }
@@ -181,7 +181,7 @@ static const int JLAddressBookLogLevel = LOG_LEVEL_ERROR;
 - (void)syncContactsAndWait {
   if (![self authorized]) return;
 
-  NSArray *existingContacts = self.contactFactory.existingContacts;
+  NSArray *existingContacts = self.contactManager.existingContacts;
 
   ABAddressBookRef addressBook = ABAddressBookCreateWithOptions(NULL, NULL);
   CFArrayRef peopleArrayRef = ABAddressBookCopyArrayOfAllPeople(addressBook);
@@ -197,7 +197,7 @@ static const int JLAddressBookLogLevel = LOG_LEVEL_ERROR;
         for (NSNumber *addressBookID in contact.addressBookIDs) {
           [idsToExistingContacts setObject:contact forKey:addressBookID];
         }
-      } else if ([self.contactFactory saveToDevice]) {
+      } else if ([self.contactManager saveToDevice]) {
         [self addContactToDevice:contact];
       }
     }
@@ -240,7 +240,7 @@ static const int JLAddressBookLogLevel = LOG_LEVEL_ERROR;
     if (!contact) {
       DDLogInfo(@"Creating a new contact from %ld linked contacts",
                 (unsigned long)linkedCount);
-      contact = [self.contactFactory newContact];
+      contact = [self.contactManager newContact];
       [self populateContact:contact
                withArrayRef:linkedArrayRef
                   withCount:linkedCount];
@@ -260,7 +260,7 @@ static const int JLAddressBookLogLevel = LOG_LEVEL_ERROR;
   CFRelease(peopleArrayRef);
   CFRelease(addressBook);
 
-  [self.contactFactory contactsUpdated:contacts];
+  [self.contactManager contactsUpdated:contacts];
 }
 
 - (void)populateContact:(id<JLContact>)contact

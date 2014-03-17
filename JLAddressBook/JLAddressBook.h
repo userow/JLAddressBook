@@ -48,10 +48,15 @@ typedef void (^SyncBlock)();
 - (BOOL)saveToDevice;
 
 @end
-
+/**
+ `JLAddressBook` utilizes a JLContactManager to automatically keep your contact
+ entities synced with a users iphone contacts.  You can utilize a
+ JLContactManager and JLContact's that are backed by CoreData or your own custom
+ entity manager.
+ */
 @interface JLAddressBook : NSObject
 
-- (instancetype)initWithContactFactory:(id<JLContactManager>)contactFactory;
+- (instancetype)initWithContactManager:(id<JLContactManager>)contactManager;
 
 - (BOOL)authorized;
 - (void)attemptToAuthorize:(AuthorizationBlock)block;

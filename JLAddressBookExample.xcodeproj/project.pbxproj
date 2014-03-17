@@ -17,6 +17,11 @@
 		4201ED7218D758800076BD9B /* JLViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4201ED7118D758800076BD9B /* JLViewController.m */; };
 		4201ED7418D758800076BD9B /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4201ED7318D758800076BD9B /* Images.xcassets */; };
 		4201ED9218D75C1B0076BD9B /* JLAddressBook.m in Sources */ = {isa = PBXBuildFile; fileRef = 4201ED9118D75C1B0076BD9B /* JLAddressBook.m */; };
+		4201ED9618D765740076BD9B /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 4201ED9418D765740076BD9B /* Model.xcdatamodeld */; };
+		4201ED9918D765D00076BD9B /* Contact.m in Sources */ = {isa = PBXBuildFile; fileRef = 4201ED9818D765D00076BD9B /* Contact.m */; };
+		4201ED9C18D765E40076BD9B /* Contact+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 4201ED9B18D765E40076BD9B /* Contact+Extension.m */; };
+		4201ED9F18D766830076BD9B /* CoreDataTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4201ED9E18D766830076BD9B /* CoreDataTableViewController.m */; };
+		4201EDA218D76A4B0076BD9B /* ContactManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4201EDA118D76A4B0076BD9B /* ContactManager.m */; };
 		C981EA259D2247E1A18B3591 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A890FCDDC5A645E1B6045D88 /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -38,6 +43,15 @@
 		4201ED7A18D758800076BD9B /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		4201ED9018D75C1B0076BD9B /* JLAddressBook.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JLAddressBook.h; path = JLAddressBook/JLAddressBook.h; sourceTree = SOURCE_ROOT; };
 		4201ED9118D75C1B0076BD9B /* JLAddressBook.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JLAddressBook.m; path = JLAddressBook/JLAddressBook.m; sourceTree = SOURCE_ROOT; };
+		4201ED9518D765740076BD9B /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
+		4201ED9718D765D00076BD9B /* Contact.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Contact.h; sourceTree = "<group>"; };
+		4201ED9818D765D00076BD9B /* Contact.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Contact.m; sourceTree = "<group>"; };
+		4201ED9A18D765E40076BD9B /* Contact+Extension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Contact+Extension.h"; sourceTree = "<group>"; };
+		4201ED9B18D765E40076BD9B /* Contact+Extension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Contact+Extension.m"; sourceTree = "<group>"; };
+		4201ED9D18D766830076BD9B /* CoreDataTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CoreDataTableViewController.h; sourceTree = "<group>"; };
+		4201ED9E18D766830076BD9B /* CoreDataTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CoreDataTableViewController.m; sourceTree = "<group>"; };
+		4201EDA018D76A4B0076BD9B /* ContactManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactManager.h; sourceTree = "<group>"; };
+		4201EDA118D76A4B0076BD9B /* ContactManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactManager.m; sourceTree = "<group>"; };
 		A890FCDDC5A645E1B6045D88 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		BA64501BBBCC4E0B95E4F910 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -95,6 +109,11 @@
 				4201ED6B18D758800076BD9B /* JLAppDelegate.m */,
 				4201ED7018D758800076BD9B /* JLViewController.h */,
 				4201ED7118D758800076BD9B /* JLViewController.m */,
+				4201EDA018D76A4B0076BD9B /* ContactManager.h */,
+				4201EDA118D76A4B0076BD9B /* ContactManager.m */,
+				4201ED9D18D766830076BD9B /* CoreDataTableViewController.h */,
+				4201ED9E18D766830076BD9B /* CoreDataTableViewController.m */,
+				4201EDA318D76A550076BD9B /* Data */,
 				4201ED9318D75C250076BD9B /* JLAddressBook */,
 				4201ED7318D758800076BD9B /* Images.xcassets */,
 				4201ED6218D758800076BD9B /* Supporting Files */,
@@ -120,6 +139,18 @@
 				4201ED9118D75C1B0076BD9B /* JLAddressBook.m */,
 			);
 			name = JLAddressBook;
+			sourceTree = "<group>";
+		};
+		4201EDA318D76A550076BD9B /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				4201ED9418D765740076BD9B /* Model.xcdatamodeld */,
+				4201ED9718D765D00076BD9B /* Contact.h */,
+				4201ED9818D765D00076BD9B /* Contact.m */,
+				4201ED9A18D765E40076BD9B /* Contact+Extension.h */,
+				4201ED9B18D765E40076BD9B /* Contact+Extension.m */,
+			);
+			name = Data;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -225,7 +256,12 @@
 			files = (
 				4201ED6C18D758800076BD9B /* JLAppDelegate.m in Sources */,
 				4201ED9218D75C1B0076BD9B /* JLAddressBook.m in Sources */,
+				4201ED9F18D766830076BD9B /* CoreDataTableViewController.m in Sources */,
+				4201ED9618D765740076BD9B /* Model.xcdatamodeld in Sources */,
+				4201EDA218D76A4B0076BD9B /* ContactManager.m in Sources */,
 				4201ED7218D758800076BD9B /* JLViewController.m in Sources */,
+				4201ED9918D765D00076BD9B /* Contact.m in Sources */,
+				4201ED9C18D765E40076BD9B /* Contact+Extension.m in Sources */,
 				4201ED6818D758800076BD9B /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -372,6 +408,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		4201ED9418D765740076BD9B /* Model.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				4201ED9518D765740076BD9B /* Model.xcdatamodel */,
+			);
+			currentVersion = 4201ED9518D765740076BD9B /* Model.xcdatamodel */;
+			path = Model.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 4201ED5018D758800076BD9B /* Project object */;
 }
