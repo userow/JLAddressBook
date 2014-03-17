@@ -1,7 +1,6 @@
+platform :ios, '7.0'
+
 pod "JLAddressBook", :path => "../JLAddressBook.podspec"
 
-target "Demo" do
-end
 
-target "DemoTests" do
-end
+
