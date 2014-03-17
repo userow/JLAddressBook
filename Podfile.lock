@@ -4,18 +4,11 @@ PODS:
   - CocoaLumberjack/Core (1.8.1)
   - CocoaLumberjack/Extensions (1.8.1):
     - CocoaLumberjack/Core
-  - JLAddressBook (1.0.0):
-    - CocoaLumberjack (~> 1.8)
 
 DEPENDENCIES:
-  - JLAddressBook (from `../JLAddressBook.podspec`)
-
-EXTERNAL SOURCES:
-  JLAddressBook:
-    :path: ../JLAddressBook.podspec
+  - CocoaLumberjack (~> 1.8)
 
 SPEC CHECKSUMS:
   CocoaLumberjack: 020378ec400d658923bf5887178394f65f052c90
-  JLAddressBook: df6880b0041fc963130da1dd3d5ebcd97db43d0c
 
 COCOAPODS: 0.29.0

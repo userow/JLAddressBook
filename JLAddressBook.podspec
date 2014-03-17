@@ -11,8 +11,7 @@ Pod::Spec.new do |s|
   s.source           = { :git => "https://github.com/jlaws/JLAddressBook.git", :tag => s.version.to_s }
   s.platform     = :ios, '7.0'
   s.requires_arc = true
-  s.source_files = 'Classes'
-  s.resources = 'Resources'
-  s.frameworks = 'Addressbook'
+  s.source_files = 'JLAddressBook'
+  s.frameworks = 'AddressBook'
   s.dependency 'CocoaLumberjack', '~> 1.8'
 end

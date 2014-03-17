@@ -331,7 +331,7 @@ static const int JLAddressBookLogLevel = LOG_LEVEL_ERROR;
   }
 
   if ([contact respondsToSelector:@selector(addressBookIDs)]) {
-    contact.addressBookIDs = [addressBookIDs asArray];
+    contact.addressBookIDs = [addressBookIDs allObjects];
   }
 }
 
@@ -340,7 +340,7 @@ static const int JLAddressBookLogLevel = LOG_LEVEL_ERROR;
   for (NSString *email in emails) {
     [newEmails addObject:[email lowercaseString]];
   }
-  return [newEmails asArray];
+  return [newEmails allObjects];
 }
 
 - (NSArray *)cleanPhoneNumbers:(NSSet *)phoneNumbers {
@@ -355,7 +355,7 @@ static const int JLAddressBookLogLevel = LOG_LEVEL_ERROR;
 
     [newPhoneNumbers addObject:digitsOnly];
   }
-  return [newPhoneNumbers asArray];
+  return [newPhoneNumbers allObjects];
 }
 
 - (UIImage *)imageAs:(BOOL)thumbnail forContact:(id<JLContact>)contact {
