@@ -75,9 +75,17 @@ then you utilize JLAddressBook to asynchronously update your core data contacts 
 
 ## Author
 
-Joe Laws, joe.laws@gmail.com
+- [Joe Laws]
+
+## Projects
+
+Here is a list of iPhone apps utilizing this library:
+
+- [Seer Reminders]
 
 ## License
 
 JLAddressBook is available under the MIT license. See the LICENSE file for more info.
 
+[Joe Laws]:joe.laws@gmail.com
+[Seer Reminders]:https://itunes.apple.com/us/app/seer-reminders/id721450216?ls=1&mt=8
