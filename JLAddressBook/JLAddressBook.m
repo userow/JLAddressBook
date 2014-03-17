@@ -238,15 +238,15 @@ static const int JLAddressBookLogLevel = LOG_LEVEL_ERROR;
     }
 
     if (!contact) {
-      DDLogInfo(@"Creating a new contact from %ul linked contacts",
-                linkedCount);
+      DDLogInfo(@"Creating a new contact from %ld linked contacts",
+                (unsigned long)linkedCount);
       contact = [self.contactFactory newContact];
       [self populateContact:contact
                withArrayRef:linkedArrayRef
                   withCount:linkedCount];
     } else {
-      DDLogInfo(@"Adding %ul linked contacts to an existing contact",
-                linkedCount);
+      DDLogInfo(@"Adding %ld linked contacts to an existing contact",
+                (unsigned long)linkedCount);
       [self populateContact:contact
                withArrayRef:linkedArrayRef
                   withCount:linkedCount];
