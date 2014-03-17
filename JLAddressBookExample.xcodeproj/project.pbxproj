@@ -16,23 +16,8 @@
 		4201ED6F18D758800076BD9B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4201ED6D18D758800076BD9B /* Main.storyboard */; };
 		4201ED7218D758800076BD9B /* JLViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4201ED7118D758800076BD9B /* JLViewController.m */; };
 		4201ED7418D758800076BD9B /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4201ED7318D758800076BD9B /* Images.xcassets */; };
-		4201ED7B18D758800076BD9B /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4201ED7A18D758800076BD9B /* XCTest.framework */; };
-		4201ED7C18D758800076BD9B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4201ED5B18D758800076BD9B /* Foundation.framework */; };
-		4201ED7D18D758800076BD9B /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4201ED5F18D758800076BD9B /* UIKit.framework */; };
-		4201ED8518D758800076BD9B /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4201ED8318D758800076BD9B /* InfoPlist.strings */; };
-		4201ED8718D758800076BD9B /* JLAddressBookExampleTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4201ED8618D758800076BD9B /* JLAddressBookExampleTests.m */; };
 		C981EA259D2247E1A18B3591 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A890FCDDC5A645E1B6045D88 /* libPods.a */; };
 /* End PBXBuildFile section */
-
-/* Begin PBXContainerItemProxy section */
-		4201ED7E18D758800076BD9B /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 4201ED5018D758800076BD9B /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 4201ED5718D758800076BD9B;
-			remoteInfo = JLAddressBookExample;
-		};
-/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		4201ED5818D758800076BD9B /* JLAddressBookExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = JLAddressBookExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -49,11 +34,7 @@
 		4201ED7018D758800076BD9B /* JLViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JLViewController.h; sourceTree = "<group>"; };
 		4201ED7118D758800076BD9B /* JLViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = JLViewController.m; sourceTree = "<group>"; };
 		4201ED7318D758800076BD9B /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		4201ED7918D758800076BD9B /* JLAddressBookExampleTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = JLAddressBookExampleTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4201ED7A18D758800076BD9B /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
-		4201ED8218D758800076BD9B /* JLAddressBookExampleTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "JLAddressBookExampleTests-Info.plist"; sourceTree = "<group>"; };
-		4201ED8418D758800076BD9B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		4201ED8618D758800076BD9B /* JLAddressBookExampleTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = JLAddressBookExampleTests.m; sourceTree = "<group>"; };
 		A890FCDDC5A645E1B6045D88 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		BA64501BBBCC4E0B95E4F910 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -70,16 +51,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		4201ED7618D758800076BD9B /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				4201ED7B18D758800076BD9B /* XCTest.framework in Frameworks */,
-				4201ED7D18D758800076BD9B /* UIKit.framework in Frameworks */,
-				4201ED7C18D758800076BD9B /* Foundation.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -87,7 +58,6 @@
 			isa = PBXGroup;
 			children = (
 				4201ED6118D758800076BD9B /* JLAddressBookExample */,
-				4201ED8018D758800076BD9B /* JLAddressBookExampleTests */,
 				4201ED5A18D758800076BD9B /* Frameworks */,
 				4201ED5918D758800076BD9B /* Products */,
 				BA64501BBBCC4E0B95E4F910 /* Pods.xcconfig */,
@@ -98,7 +68,6 @@
 			isa = PBXGroup;
 			children = (
 				4201ED5818D758800076BD9B /* JLAddressBookExample.app */,
-				4201ED7918D758800076BD9B /* JLAddressBookExampleTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -140,24 +109,6 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		4201ED8018D758800076BD9B /* JLAddressBookExampleTests */ = {
-			isa = PBXGroup;
-			children = (
-				4201ED8618D758800076BD9B /* JLAddressBookExampleTests.m */,
-				4201ED8118D758800076BD9B /* Supporting Files */,
-			);
-			path = JLAddressBookExampleTests;
-			sourceTree = "<group>";
-		};
-		4201ED8118D758800076BD9B /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				4201ED8218D758800076BD9B /* JLAddressBookExampleTests-Info.plist */,
-				4201ED8318D758800076BD9B /* InfoPlist.strings */,
-			);
-			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -180,24 +131,6 @@
 			productReference = 4201ED5818D758800076BD9B /* JLAddressBookExample.app */;
 			productType = "com.apple.product-type.application";
 		};
-		4201ED7818D758800076BD9B /* JLAddressBookExampleTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 4201ED8D18D758800076BD9B /* Build configuration list for PBXNativeTarget "JLAddressBookExampleTests" */;
-			buildPhases = (
-				4201ED7518D758800076BD9B /* Sources */,
-				4201ED7618D758800076BD9B /* Frameworks */,
-				4201ED7718D758800076BD9B /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				4201ED7F18D758800076BD9B /* PBXTargetDependency */,
-			);
-			name = JLAddressBookExampleTests;
-			productName = JLAddressBookExampleTests;
-			productReference = 4201ED7918D758800076BD9B /* JLAddressBookExampleTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -207,11 +140,6 @@
 				CLASSPREFIX = JL;
 				LastUpgradeCheck = 0510;
 				ORGANIZATIONNAME = "Joe Laws";
-				TargetAttributes = {
-					4201ED7818D758800076BD9B = {
-						TestTargetID = 4201ED5718D758800076BD9B;
-					};
-				};
 			};
 			buildConfigurationList = 4201ED5318D758800076BD9B /* Build configuration list for PBXProject "JLAddressBookExample" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -227,7 +155,6 @@
 			projectRoot = "";
 			targets = (
 				4201ED5718D758800076BD9B /* JLAddressBookExample */,
-				4201ED7818D758800076BD9B /* JLAddressBookExampleTests */,
 			);
 		};
 /* End PBXProject section */
@@ -240,14 +167,6 @@
 				4201ED7418D758800076BD9B /* Images.xcassets in Resources */,
 				4201ED6618D758800076BD9B /* InfoPlist.strings in Resources */,
 				4201ED6F18D758800076BD9B /* Main.storyboard in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		4201ED7718D758800076BD9B /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				4201ED8518D758800076BD9B /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -297,23 +216,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		4201ED7518D758800076BD9B /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				4201ED8718D758800076BD9B /* JLAddressBookExampleTests.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		4201ED7F18D758800076BD9B /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 4201ED5718D758800076BD9B /* JLAddressBookExample */;
-			targetProxy = 4201ED7E18D758800076BD9B /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		4201ED6418D758800076BD9B /* InfoPlist.strings */ = {
@@ -330,14 +233,6 @@
 				4201ED6E18D758800076BD9B /* Base */,
 			);
 			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
-		4201ED8318D758800076BD9B /* InfoPlist.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				4201ED8418D758800076BD9B /* en */,
-			);
-			name = InfoPlist.strings;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -441,46 +336,6 @@
 			};
 			name = Release;
 		};
-		4201ED8E18D758800076BD9B /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/JLAddressBookExample.app/JLAddressBookExample";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-					"$(DEVELOPER_FRAMEWORKS_DIR)",
-				);
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "JLAddressBookExample/JLAddressBookExample-Prefix.pch";
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = "JLAddressBookExampleTests/JLAddressBookExampleTests-Info.plist";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUNDLE_LOADER)";
-				WRAPPER_EXTENSION = xctest;
-			};
-			name = Debug;
-		};
-		4201ED8F18D758800076BD9B /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/JLAddressBookExample.app/JLAddressBookExample";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-					"$(DEVELOPER_FRAMEWORKS_DIR)",
-				);
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "JLAddressBookExample/JLAddressBookExample-Prefix.pch";
-				INFOPLIST_FILE = "JLAddressBookExampleTests/JLAddressBookExampleTests-Info.plist";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUNDLE_LOADER)";
-				WRAPPER_EXTENSION = xctest;
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -498,15 +353,6 @@
 			buildConfigurations = (
 				4201ED8B18D758800076BD9B /* Debug */,
 				4201ED8C18D758800076BD9B /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		4201ED8D18D758800076BD9B /* Build configuration list for PBXNativeTarget "JLAddressBookExampleTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				4201ED8E18D758800076BD9B /* Debug */,
-				4201ED8F18D758800076BD9B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
