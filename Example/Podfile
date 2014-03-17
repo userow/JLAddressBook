@@ -1,0 +1,7 @@
+pod "JLAddressBook", :path => "../JLAddressBook.podspec"
+
+target "Demo" do
+end
+
+target "DemoTests" do
+end
