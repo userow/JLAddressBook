@@ -322,11 +322,12 @@ static const int JLAddressBookLogLevel = LOG_LEVEL_ERROR;
     }
   }
 
-  if ([contact respondsToSelector:@selector(phoneNumbers)]) {
+  if ([contact respondsToSelector:@selector(phoneNumbers)] &&
+      [phoneNumbers count] > 0) {
     contact.phoneNumbers = [self cleanPhoneNumbers:phoneNumbers];
   }
 
-  if ([contact respondsToSelector:@selector(emails)]) {
+  if ([contact respondsToSelector:@selector(emails)] && [emails count] > 0) {
     contact.emails = [self cleanEmails:emails];
   }
 
