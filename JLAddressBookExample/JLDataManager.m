@@ -7,14 +7,12 @@
 //
 
 #import "JLDataManager.h"
-#import "Contact+Extension.h"
-#import "JLCoreDataContactManager.h"
+@import CoreData;
 
 @interface JLDataManager ()
 
 @property(strong, nonatomic, readwrite)
     NSManagedObjectContext *managedObjectContext;
-@property(strong, nonatomic, readwrite) id<JLContactManager> contactManager;
 
 @end
 
@@ -44,9 +42,6 @@
     } else {
       return nil;
     }
-    self.contactManager = [[JLCoreDataContactManager alloc]
-        initWithEntityName:[Contact entityName]
-                 inContext:self.managedObjectContext];
   }
   return self;
 }
@@ -56,7 +51,15 @@
 }
 
 - (void)save {
-  [self.managedObjectContext save:NULL];
+  if (![self.managedObjectContext save:nil]) {
+    NSLog(@"Could not save context");
+  } else {
+    [self.managedObjectContext.parentContext performBlock:^{
+        if (![self.managedObjectContext.parentContext save:nil]) {
+          NSLog(@"Could not save parent context");
+        }
+    }];
+  }
 }
 
 - (void)setupManagedObjectContext {

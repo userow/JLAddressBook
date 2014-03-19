@@ -39,6 +39,8 @@ typedef void (^AuthorizationBlock)(bool granted, NSError *error);
 - (UIImage *)photoForContact:(id<JLContact>)contact;
 - (UIImage *)thumbnailForContact:(id<JLContact>)contact;
 
+// Adds the contact to the device, and if they implement the
+// @selector(addressBookIDs) it will be updated with the new recordID
 - (void)addContactToDevice:(id<JLContact>)contact;
 - (void)addContactToDevice:(id<JLContact>)contact withPhoto:(UIImage *)photo;
 

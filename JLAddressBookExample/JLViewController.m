@@ -10,10 +10,10 @@
 #import "Contact+Extension.h"
 #import "JLDataManager.h"
 #import "JLAddressBook.h"
+#import "JLCoreDataContactManager.h"
 
 @interface JLViewController ()
 
-@property(strong, nonatomic) JLDataManager *dataManager;
 @property(strong, nonatomic) JLAddressBook *addressBook;
 
 @end
@@ -23,10 +23,14 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
 
-  self.dataManager = [JLDataManager sharedInstance];
-  [self.dataManager reset];
-  self.addressBook = [[JLAddressBook alloc]
-      initWithContactManager:self.dataManager.contactManager];
+  JLDataManager *dataManager = [JLDataManager sharedInstance];
+  [dataManager reset];
+
+  JLCoreDataContactManager *contactManager = [[JLCoreDataContactManager alloc]
+      initWithEntityName:[Contact entityName]
+               inContext:dataManager.managedObjectContext];
+  self.addressBook =
+      [[JLAddressBook alloc] initWithContactManager:contactManager];
 
   NSFetchRequest *request =
       [NSFetchRequest fetchRequestWithEntityName:[Contact entityName]];
@@ -38,17 +42,17 @@
 
   self.fetchedResultsController = [[NSFetchedResultsController alloc]
       initWithFetchRequest:request
-      managedObjectContext:self.dataManager.managedObjectContext
+      managedObjectContext:dataManager.managedObjectContext
         sectionNameKeyPath:nil
                  cacheName:nil];
 
   [self.addressBook attemptToAuthorize:^(bool granted, NSError *error) {
       if (granted) {
-        [self.addressBook syncContacts];
-        [self.dataManager save];
-
-        dispatch_async(dispatch_get_main_queue(),
-                       ^{ [self.tableView reloadData]; });
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.addressBook syncContacts];
+            [dataManager save];
+            [self.tableView reloadData];
+        });
 
       } else {
         NSLog(@"User denied contact access %@", error);

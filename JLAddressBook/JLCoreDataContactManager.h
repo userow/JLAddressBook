@@ -6,7 +6,6 @@
 //  Copyright (c) 2014 Joe Laws. All rights reserved.
 //
 
-#import "JLContact.h"
 #import "JLContactManager.h"
 @import Foundation;
 

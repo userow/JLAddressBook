@@ -17,6 +17,5 @@
 
 @property(strong, nonatomic, readonly)
     NSManagedObjectContext *managedObjectContext;
-@property(strong, nonatomic, readonly) id<JLContactManager> contactManager;
 
 @end

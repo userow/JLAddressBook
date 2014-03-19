@@ -17,8 +17,6 @@
 
 + (NSString *)entityName;
 
-+ (instancetype)insertNewObjectInContext:(NSManagedObjectContext *)context;
-
 - (NSString *)fullName;
 
 @end

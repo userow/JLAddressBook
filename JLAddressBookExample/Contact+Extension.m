@@ -14,16 +14,6 @@
   return @"Contact";
 }
 
-+ (instancetype)insertNewObjectInContext:(NSManagedObjectContext *)context {
-  __block Contact *contact;
-  [context performBlockAndWait:^{
-      contact =
-          [NSEntityDescription insertNewObjectForEntityForName:[self entityName]
-                                        inManagedObjectContext:context];
-  }];
-  return contact;
-}
-
 - (NSString *)fullName {
   if ([self.firstName length] > 0 && [self.lastName length] > 0) {
     return [NSString stringWithFormat:@"%@, %@", self.lastName, self.firstName];
