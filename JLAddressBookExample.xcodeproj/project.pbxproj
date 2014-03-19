@@ -18,10 +18,11 @@
 		4201ED7418D758800076BD9B /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4201ED7318D758800076BD9B /* Images.xcassets */; };
 		4201ED9218D75C1B0076BD9B /* JLAddressBook.m in Sources */ = {isa = PBXBuildFile; fileRef = 4201ED9118D75C1B0076BD9B /* JLAddressBook.m */; };
 		4201ED9618D765740076BD9B /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 4201ED9418D765740076BD9B /* Model.xcdatamodeld */; };
-		4201ED9918D765D00076BD9B /* Contact.m in Sources */ = {isa = PBXBuildFile; fileRef = 4201ED9818D765D00076BD9B /* Contact.m */; };
 		4201ED9C18D765E40076BD9B /* Contact+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 4201ED9B18D765E40076BD9B /* Contact+Extension.m */; };
 		4201ED9F18D766830076BD9B /* CoreDataTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4201ED9E18D766830076BD9B /* CoreDataTableViewController.m */; };
-		4201EDA218D76A4B0076BD9B /* ContactManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4201EDA118D76A4B0076BD9B /* ContactManager.m */; };
+		4201EDA218D76A4B0076BD9B /* JLDataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4201EDA118D76A4B0076BD9B /* JLDataManager.m */; };
+		4281736D18D9DB0800754BEC /* JLCoreDataContactManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4281736C18D9DB0800754BEC /* JLCoreDataContactManager.m */; };
+		4281737018D9E3C800754BEC /* Contact.m in Sources */ = {isa = PBXBuildFile; fileRef = 4281736F18D9E3C800754BEC /* Contact.m */; };
 		C981EA259D2247E1A18B3591 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A890FCDDC5A645E1B6045D88 /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -44,14 +45,18 @@
 		4201ED9018D75C1B0076BD9B /* JLAddressBook.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JLAddressBook.h; path = JLAddressBook/JLAddressBook.h; sourceTree = SOURCE_ROOT; };
 		4201ED9118D75C1B0076BD9B /* JLAddressBook.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JLAddressBook.m; path = JLAddressBook/JLAddressBook.m; sourceTree = SOURCE_ROOT; };
 		4201ED9518D765740076BD9B /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
-		4201ED9718D765D00076BD9B /* Contact.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Contact.h; sourceTree = "<group>"; };
-		4201ED9818D765D00076BD9B /* Contact.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Contact.m; sourceTree = "<group>"; };
 		4201ED9A18D765E40076BD9B /* Contact+Extension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Contact+Extension.h"; sourceTree = "<group>"; };
 		4201ED9B18D765E40076BD9B /* Contact+Extension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Contact+Extension.m"; sourceTree = "<group>"; };
 		4201ED9D18D766830076BD9B /* CoreDataTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CoreDataTableViewController.h; sourceTree = "<group>"; };
 		4201ED9E18D766830076BD9B /* CoreDataTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CoreDataTableViewController.m; sourceTree = "<group>"; };
-		4201EDA018D76A4B0076BD9B /* ContactManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactManager.h; sourceTree = "<group>"; };
-		4201EDA118D76A4B0076BD9B /* ContactManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactManager.m; sourceTree = "<group>"; };
+		4201EDA018D76A4B0076BD9B /* JLDataManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JLDataManager.h; sourceTree = "<group>"; };
+		4201EDA118D76A4B0076BD9B /* JLDataManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JLDataManager.m; sourceTree = "<group>"; };
+		4281736918D9D7F500754BEC /* JLContact.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = JLContact.h; path = JLAddressBook/JLContact.h; sourceTree = SOURCE_ROOT; };
+		4281736A18D9D83300754BEC /* JLContactManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = JLContactManager.h; path = JLAddressBook/JLContactManager.h; sourceTree = SOURCE_ROOT; };
+		4281736B18D9DB0800754BEC /* JLCoreDataContactManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JLCoreDataContactManager.h; path = JLAddressBook/JLCoreDataContactManager.h; sourceTree = SOURCE_ROOT; };
+		4281736C18D9DB0800754BEC /* JLCoreDataContactManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JLCoreDataContactManager.m; path = JLAddressBook/JLCoreDataContactManager.m; sourceTree = SOURCE_ROOT; };
+		4281736E18D9E3C800754BEC /* Contact.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Contact.h; sourceTree = "<group>"; };
+		4281736F18D9E3C800754BEC /* Contact.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Contact.m; sourceTree = "<group>"; };
 		A890FCDDC5A645E1B6045D88 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		BA64501BBBCC4E0B95E4F910 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -109,8 +114,8 @@
 				4201ED6B18D758800076BD9B /* JLAppDelegate.m */,
 				4201ED7018D758800076BD9B /* JLViewController.h */,
 				4201ED7118D758800076BD9B /* JLViewController.m */,
-				4201EDA018D76A4B0076BD9B /* ContactManager.h */,
-				4201EDA118D76A4B0076BD9B /* ContactManager.m */,
+				4201EDA018D76A4B0076BD9B /* JLDataManager.h */,
+				4201EDA118D76A4B0076BD9B /* JLDataManager.m */,
 				4201ED9D18D766830076BD9B /* CoreDataTableViewController.h */,
 				4201ED9E18D766830076BD9B /* CoreDataTableViewController.m */,
 				4201EDA318D76A550076BD9B /* Data */,
@@ -135,8 +140,12 @@
 		4201ED9318D75C250076BD9B /* JLAddressBook */ = {
 			isa = PBXGroup;
 			children = (
+				4281736918D9D7F500754BEC /* JLContact.h */,
+				4281736A18D9D83300754BEC /* JLContactManager.h */,
 				4201ED9018D75C1B0076BD9B /* JLAddressBook.h */,
 				4201ED9118D75C1B0076BD9B /* JLAddressBook.m */,
+				4281736B18D9DB0800754BEC /* JLCoreDataContactManager.h */,
+				4281736C18D9DB0800754BEC /* JLCoreDataContactManager.m */,
 			);
 			name = JLAddressBook;
 			sourceTree = "<group>";
@@ -145,8 +154,8 @@
 			isa = PBXGroup;
 			children = (
 				4201ED9418D765740076BD9B /* Model.xcdatamodeld */,
-				4201ED9718D765D00076BD9B /* Contact.h */,
-				4201ED9818D765D00076BD9B /* Contact.m */,
+				4281736E18D9E3C800754BEC /* Contact.h */,
+				4281736F18D9E3C800754BEC /* Contact.m */,
 				4201ED9A18D765E40076BD9B /* Contact+Extension.h */,
 				4201ED9B18D765E40076BD9B /* Contact+Extension.m */,
 			);
@@ -256,11 +265,12 @@
 			files = (
 				4201ED6C18D758800076BD9B /* JLAppDelegate.m in Sources */,
 				4201ED9218D75C1B0076BD9B /* JLAddressBook.m in Sources */,
+				4281737018D9E3C800754BEC /* Contact.m in Sources */,
 				4201ED9F18D766830076BD9B /* CoreDataTableViewController.m in Sources */,
+				4281736D18D9DB0800754BEC /* JLCoreDataContactManager.m in Sources */,
 				4201ED9618D765740076BD9B /* Model.xcdatamodeld in Sources */,
-				4201EDA218D76A4B0076BD9B /* ContactManager.m in Sources */,
+				4201EDA218D76A4B0076BD9B /* JLDataManager.m in Sources */,
 				4201ED7218D758800076BD9B /* JLViewController.m in Sources */,
-				4201ED9918D765D00076BD9B /* Contact.m in Sources */,
 				4201ED9C18D765E40076BD9B /* Contact+Extension.m in Sources */,
 				4201ED6818D758800076BD9B /* main.m in Sources */,
 			);

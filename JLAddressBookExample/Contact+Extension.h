@@ -9,6 +9,10 @@
 #import "Contact.h"
 #import "JLAddressBook.h"
 
+@interface ImageToDataTransformer : NSValueTransformer
+
+@end
+
 @interface Contact (Extension)<JLContact>
 
 + (NSString *)entityName;

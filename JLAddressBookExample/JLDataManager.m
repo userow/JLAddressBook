@@ -1,28 +1,30 @@
 //
-//  ContactManager.m
+//  JLDataManager.m
 //  JLAddressBookExample
 //
 //  Created by Joseph Laws on 3/17/14.
 //  Copyright (c) 2014 Joe Laws. All rights reserved.
 //
 
-#import "ContactManager.h"
+#import "JLDataManager.h"
 #import "Contact+Extension.h"
+#import "JLCoreDataContactManager.h"
 
-@interface ContactManager ()
+@interface JLDataManager ()
 
 @property(strong, nonatomic, readwrite)
     NSManagedObjectContext *managedObjectContext;
+@property(strong, nonatomic, readwrite) id<JLContactManager> contactManager;
 
 @end
 
-@implementation ContactManager
+@implementation JLDataManager
 
-+ (ContactManager *)sharedInstance {
-  static ContactManager *_instance = nil;
++ (JLDataManager *)sharedInstance {
+  static JLDataManager *_instance = nil;
   static dispatch_once_t onceToken;
 
-  dispatch_once(&onceToken, ^{ _instance = [[ContactManager alloc] init]; });
+  dispatch_once(&onceToken, ^{ _instance = [[JLDataManager alloc] init]; });
 
   return _instance;
 }
@@ -42,8 +44,19 @@
     } else {
       return nil;
     }
+    self.contactManager = [[JLCoreDataContactManager alloc]
+        initWithEntityName:[Contact entityName]
+                 inContext:self.managedObjectContext];
   }
   return self;
+}
+
+- (void)reset {
+  [self.managedObjectContext reset];
+}
+
+- (void)save {
+  [self.managedObjectContext save:NULL];
 }
 
 - (void)setupManagedObjectContext {
@@ -85,48 +98,6 @@
                                                 error:NULL];
   return [documentsDirectory
       URLByAppendingPathComponent:@"JLAddressBookExample.sqlite"];
-}
-
-#pragma mark - JLContactManager
-
-- (id<JLContact>)newContact {
-  return [Contact insertNewObjectInContext:self.managedObjectContext];
-}
-
-- (void)contactsUpdated:(NSArray *)contacts {
-  NSLog(@"Found %d contacts", [contacts count]);
-}
-
-- (NSArray *)existingContacts {
-  NSFetchRequest *request =
-      [NSFetchRequest fetchRequestWithEntityName:[Contact entityName]];
-
-  return [self performFetch:request];
-}
-
-- (BOOL)saveToDevice {
-  return false;
-}
-
-#pragma mark - Helpers
-
-- (NSArray *)performFetch:(NSFetchRequest *)request {
-  [request setReturnsObjectsAsFaults:false];
-
-  NSManagedObjectContext *managedObjectContext = self.managedObjectContext;
-
-  __block NSArray *results;
-  [managedObjectContext performBlockAndWait:^{
-      NSError *error = nil;
-
-      results = [managedObjectContext executeFetchRequest:request error:&error];
-
-      if (error) {
-        NSLog(@"Error %@ while fetching %@ ", [error description],
-                   request);
-      }
-  }];
-  return results;
 }
 
 @end

@@ -22,22 +22,10 @@ static const int JLAddressBookLogLevel = LOG_LEVEL_ERROR;
 @interface JLAddressBook ()
 @property(nonatomic, strong) NSRegularExpression *regex;
 @property(nonatomic, strong) id<JLContactManager> contactManager;
+@property(nonatomic) ABAddressBookRef addressBook;
 @end
 
 @implementation JLAddressBook
-
-+ (NSOperationQueue *)queue {
-
-  static NSOperationQueue *_instance = nil;
-  static dispatch_once_t onceToken;
-
-  dispatch_once(&onceToken, ^{
-      _instance = [[NSOperationQueue alloc] init];
-      _instance.maxConcurrentOperationCount = 1;
-  });
-
-  return _instance;
-}
 
 - (instancetype)initWithContactManager:(id<JLContactManager>)contactManager {
   self = [super init];
@@ -47,16 +35,26 @@ static const int JLAddressBookLogLevel = LOG_LEVEL_ERROR;
         regularExpressionWithPattern:@"[^\\d]"
                              options:NSRegularExpressionCaseInsensitive
                                error:&error];
+
     if (error) {
-      self = nil;
+      DDLogError(@"Failed to instantiate the regex parser");
       return nil;
     }
+
+    self.addressBook = ABAddressBookCreateWithOptions(NULL, NULL);
+
+    if (!self.addressBook) {
+      DDLogError(@"Failed to instantiate an ABAddressBook");
+      return nil;
+    }
+
     self.contactManager = contactManager;
   }
   return self;
 }
 
 - (void)dealloc {
+  CFRelease(self.addressBook);
 }
 
 - (BOOL)authorized {
@@ -71,10 +69,8 @@ static const int JLAddressBookLogLevel = LOG_LEVEL_ERROR;
       block(true, nil);
     } break;
     case kABAuthorizationStatusNotDetermined: {
-      ABAddressBookRef addressBook = ABAddressBookCreateWithOptions(NULL, NULL);
       ABAddressBookRequestAccessWithCompletion(
-          addressBook, ^(bool granted, CFErrorRef error) {
-              CFRelease(addressBook);
+          self.addressBook, ^(bool granted, CFErrorRef error) {
               if (granted) {
                 block(true, nil);
               } else {
@@ -100,91 +96,13 @@ static const int JLAddressBookLogLevel = LOG_LEVEL_ERROR;
   }
 }
 
-- (UIImage *)photoForContact:(id<JLContact>)contact {
-  return [self imageAs:NO forContact:contact];
-}
-
-- (UIImage *)thumbnailForContact:(id<JLContact>)contact {
-  return [self imageAs:YES forContact:contact];
-}
-
-- (void)syncContacts {
-  [[JLAddressBook queue]
-      addOperationWithBlock:^{ [self syncContactsAndWait]; }];
-}
-
-- (void)syncContactsAndThen:(SyncBlock)b {
-  __strong SyncBlock block = b;
-  [[JLAddressBook queue] addOperationWithBlock:^{
-      [self syncContactsAndWait];
-      block();
-  }];
-}
-
-- (void)addContactToDevice:(id<JLContact>)contact {
-  [self addContactToDevice:contact withPhoto:nil];
-}
-
-- (void)addContactToDevice:(id<JLContact>)contact withPhoto:(UIImage *)photo {
-  DDLogInfo(@"Adding contact to device %@", contact);
-
-  ABRecordRef record = ABPersonCreate();
-
-  if ([contact respondsToSelector:@selector(firstName)]) {
-    ABRecordSetValue(record, kABPersonFirstNameProperty,
-                     (__bridge CFTypeRef)(contact.firstName), NULL);
-  }
-
-  if ([contact respondsToSelector:@selector(lastName)]) {
-    ABRecordSetValue(record, kABPersonLastNameProperty,
-                     (__bridge CFTypeRef)(contact.lastName), NULL);
-  }
-
-  if ([contact respondsToSelector:@selector(emails)]) {
-    ABMutableMultiValueRef multiEmails =
-        ABMultiValueCreateMutable(kABStringPropertyType);
-    for (NSString *email in contact.emails) {
-      ABMultiValueAddValueAndLabel(multiEmails, (__bridge CFTypeRef)(email),
-                                   kABHomeLabel, NULL);
-    }
-    ABRecordSetValue(record, kABPersonEmailProperty, multiEmails, NULL);
-  }
-
-  if ([contact respondsToSelector:@selector(phoneNumbers)]) {
-    ABMutableMultiValueRef multiPhones =
-        ABMultiValueCreateMutable(kABStringPropertyType);
-    for (NSString *phoneNumber in contact.phoneNumbers) {
-      ABMultiValueAddValueAndLabel(
-          multiPhones, (__bridge CFTypeRef)(phoneNumber), kABHomeLabel, NULL);
-    }
-    ABRecordSetValue(record, kABPersonPhoneProperty, multiPhones, NULL);
-  }
-
-  if (photo) {
-    NSData *data = UIImagePNGRepresentation(photo);
-    ABPersonSetImageData(record, (__bridge CFDataRef)data, NULL);
-  }
-
-  ABAddressBookRef addressBook = ABAddressBookCreateWithOptions(NULL, NULL);
-  ABAddressBookAddRecord(addressBook, record, NULL);
-  ABAddressBookSave(addressBook, NULL);
-  CFRelease(addressBook);
-
-  if ([contact respondsToSelector:@selector(addressBookIDs)]) {
-    NSNumber *recordID = @(ABRecordGetRecordID(record));
-    contact.addressBookIDs = @[ recordID ];
-  }
-}
-
-#pragma mark - Helpers
-
-- (void)syncContactsAndWait {
-  if (![self authorized]) return;
+- (NSArray *)syncContacts {
+  if (![self authorized]) return nil;
 
   NSArray *existingContacts = self.contactManager.existingContacts;
 
-  ABAddressBookRef addressBook = ABAddressBookCreateWithOptions(NULL, NULL);
-  CFArrayRef peopleArrayRef = ABAddressBookCopyArrayOfAllPeople(addressBook);
+  CFArrayRef peopleArrayRef =
+      ABAddressBookCopyArrayOfAllPeople(self.addressBook);
   NSUInteger contactCount = (NSUInteger)CFArrayGetCount(peopleArrayRef);
   NSMutableSet *linkedPeopleToSkip = [[NSMutableSet alloc] init];
 
@@ -197,8 +115,6 @@ static const int JLAddressBookLogLevel = LOG_LEVEL_ERROR;
         for (NSNumber *addressBookID in contact.addressBookIDs) {
           [idsToExistingContacts setObject:contact forKey:addressBookID];
         }
-      } else if ([self.contactManager saveToDevice]) {
-        [self addContactToDevice:contact];
       }
     }
   }
@@ -258,10 +174,72 @@ static const int JLAddressBookLogLevel = LOG_LEVEL_ERROR;
   }
 
   CFRelease(peopleArrayRef);
-  CFRelease(addressBook);
 
-  [self.contactManager contactsUpdated:contacts];
+  return contacts;
 }
+
+- (UIImage *)photoForContact:(id<JLContact>)contact {
+  return [self imageAs:NO forContact:contact];
+}
+
+- (UIImage *)thumbnailForContact:(id<JLContact>)contact {
+  return [self imageAs:YES forContact:contact];
+}
+
+- (void)addContactToDevice:(id<JLContact>)contact {
+  [self addContactToDevice:contact withPhoto:nil];
+}
+
+- (void)addContactToDevice:(id<JLContact>)contact withPhoto:(UIImage *)photo {
+  DDLogInfo(@"Adding contact to device %@", contact);
+
+  ABRecordRef record = ABPersonCreate();
+
+  if ([contact respondsToSelector:@selector(firstName)]) {
+    ABRecordSetValue(record, kABPersonFirstNameProperty,
+                     (__bridge CFTypeRef)(contact.firstName), NULL);
+  }
+
+  if ([contact respondsToSelector:@selector(lastName)]) {
+    ABRecordSetValue(record, kABPersonLastNameProperty,
+                     (__bridge CFTypeRef)(contact.lastName), NULL);
+  }
+
+  if ([contact respondsToSelector:@selector(emails)]) {
+    ABMutableMultiValueRef multiEmails =
+        ABMultiValueCreateMutable(kABStringPropertyType);
+    for (NSString *email in contact.emails) {
+      ABMultiValueAddValueAndLabel(multiEmails, (__bridge CFTypeRef)(email),
+                                   kABHomeLabel, NULL);
+    }
+    ABRecordSetValue(record, kABPersonEmailProperty, multiEmails, NULL);
+  }
+
+  if ([contact respondsToSelector:@selector(phoneNumbers)]) {
+    ABMutableMultiValueRef multiPhones =
+        ABMultiValueCreateMutable(kABStringPropertyType);
+    for (NSString *phoneNumber in contact.phoneNumbers) {
+      ABMultiValueAddValueAndLabel(
+          multiPhones, (__bridge CFTypeRef)(phoneNumber), kABHomeLabel, NULL);
+    }
+    ABRecordSetValue(record, kABPersonPhoneProperty, multiPhones, NULL);
+  }
+
+  if (photo) {
+    NSData *data = UIImagePNGRepresentation(photo);
+    ABPersonSetImageData(record, (__bridge CFDataRef)data, NULL);
+  }
+
+  ABAddressBookAddRecord(self.addressBook, record, NULL);
+  ABAddressBookSave(self.addressBook, NULL);
+
+  if ([contact respondsToSelector:@selector(addressBookIDs)]) {
+    NSNumber *recordID = @(ABRecordGetRecordID(record));
+    contact.addressBookIDs = @[ recordID ];
+  }
+}
+
+#pragma mark - Helpers
 
 - (void)populateContact:(id<JLContact>)contact
            withArrayRef:(CFArrayRef)linkedArrayRef
@@ -365,12 +343,10 @@ static const int JLAddressBookLogLevel = LOG_LEVEL_ERROR;
     return nil;
   }
 
-  ABAddressBookRef addressBook = ABAddressBookCreateWithOptions(NULL, NULL);
-
   for (NSNumber *recordID in contact.addressBookIDs) {
 
     ABRecordRef recordRef =
-        ABAddressBookGetPersonWithRecordID(addressBook, recordID.intValue);
+        ABAddressBookGetPersonWithRecordID(self.addressBook, recordID.intValue);
 
     if (recordRef == NULL) continue;
 
@@ -378,7 +354,6 @@ static const int JLAddressBookLogLevel = LOG_LEVEL_ERROR;
         [self imagePropertyFromRecord:recordRef asThumbnail:thumbnail];
     if (image) return image;
   }
-  CFRelease(addressBook);
 
   return nil;
 }

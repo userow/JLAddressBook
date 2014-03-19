@@ -1,5 +1,5 @@
 //
-//  ContactManager.h
+//  JLDataManager.h
 //  JLAddressBookExample
 //
 //  Created by Joseph Laws on 3/17/14.
@@ -9,11 +9,14 @@
 #import <Foundation/Foundation.h>
 #import "JLAddressBook.h"
 
-@interface ContactManager : NSObject<JLContactManager>
+@interface JLDataManager : NSObject
 
-+ (ContactManager *)sharedInstance;
++ (JLDataManager *)sharedInstance;
+- (void)reset;
+- (void)save;
 
 @property(strong, nonatomic, readonly)
     NSManagedObjectContext *managedObjectContext;
+@property(strong, nonatomic, readonly) id<JLContactManager> contactManager;
 
 @end

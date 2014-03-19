@@ -8,12 +8,12 @@
 
 #import "JLViewController.h"
 #import "Contact+Extension.h"
-#import "ContactManager.h"
+#import "JLDataManager.h"
 #import "JLAddressBook.h"
 
 @interface JLViewController ()
 
-@property(strong, nonatomic) ContactManager *contactManager;
+@property(strong, nonatomic) JLDataManager *dataManager;
 @property(strong, nonatomic) JLAddressBook *addressBook;
 
 @end
@@ -23,30 +23,33 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
 
-  self.contactManager = [ContactManager sharedInstance];
-  self.addressBook =
-      [[JLAddressBook alloc] initWithContactManager:self.contactManager];
+  self.dataManager = [JLDataManager sharedInstance];
+  [self.dataManager reset];
+  self.addressBook = [[JLAddressBook alloc]
+      initWithContactManager:self.dataManager.contactManager];
 
   NSFetchRequest *request =
       [NSFetchRequest fetchRequestWithEntityName:[Contact entityName]];
   request.sortDescriptors = @[
     [NSSortDescriptor sortDescriptorWithKey:@"lastName"
-                                  ascending:NO
-                                   selector:@selector(compare:)]
+                                  ascending:YES
+                                   selector:@selector(caseInsensitiveCompare:)]
   ];
 
   self.fetchedResultsController = [[NSFetchedResultsController alloc]
       initWithFetchRequest:request
-      managedObjectContext:self.contactManager.managedObjectContext
+      managedObjectContext:self.dataManager.managedObjectContext
         sectionNameKeyPath:nil
                  cacheName:nil];
 
   [self.addressBook attemptToAuthorize:^(bool granted, NSError *error) {
       if (granted) {
-        [self.addressBook syncContactsAndThen:^{
-            dispatch_async(dispatch_get_main_queue(),
-                           ^{ [self.tableView reloadData]; });
-        }];
+        [self.addressBook syncContacts];
+        [self.dataManager save];
+
+        dispatch_async(dispatch_get_main_queue(),
+                       ^{ [self.tableView reloadData]; });
+
       } else {
         NSLog(@"User denied contact access %@", error);
       }
@@ -66,6 +69,7 @@
       [self.fetchedResultsController objectAtIndexPath:indexPath];
   cell.textLabel.text = contact.fullName;
   cell.detailTextLabel.text = [contact.emails firstObject];
+  [cell.imageView setImage:contact.thumbnail];
   return cell;
 }
 
