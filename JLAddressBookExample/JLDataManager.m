@@ -13,6 +13,7 @@
 
 @property(strong, nonatomic, readwrite)
     NSManagedObjectContext *managedObjectContext;
+@property(strong, nonatomic) NSPersistentStore *persistentStore;
 
 @end
 
@@ -39,6 +40,7 @@
       self.managedObjectContext = [[NSManagedObjectContext alloc]
           initWithConcurrencyType:NSMainQueueConcurrencyType];
       self.managedObjectContext.parentContext = privateWritingContext;
+      [self.managedObjectContext setMergePolicy:NSOverwriteMergePolicy];
     } else {
       return nil;
     }
@@ -47,7 +49,23 @@
 }
 
 - (void)reset {
-  [self.managedObjectContext reset];
+  NSLog(@"Resetting persistent store");
+
+  NSPersistentStoreCoordinator *coordinator =
+      self.managedObjectContext.parentContext.persistentStoreCoordinator;
+
+  [coordinator removePersistentStore:self.persistentStore error:nil];
+
+  NSError *error;
+
+  [[NSFileManager defaultManager] removeItemAtURL:[self storeURL] error:&error];
+
+  self.persistentStore =
+      [coordinator addPersistentStoreWithType:NSSQLiteStoreType
+                                configuration:nil
+                                          URL:[self storeURL]
+                                      options:nil
+                                        error:&error];
 }
 
 - (void)save {
@@ -62,19 +80,17 @@
   }
 }
 
-- (void)setupManagedObjectContext {
-}
-
 - (NSPersistentStoreCoordinator *)coordinator {
   NSPersistentStoreCoordinator *coordinator =
       [[NSPersistentStoreCoordinator alloc]
           initWithManagedObjectModel:[self model]];
   NSError *error;
-  [coordinator addPersistentStoreWithType:NSSQLiteStoreType
-                            configuration:nil
-                                      URL:[self storeURL]
-                                  options:nil
-                                    error:&error];
+  self.persistentStore =
+      [coordinator addPersistentStoreWithType:NSSQLiteStoreType
+                                configuration:nil
+                                          URL:[self storeURL]
+                                      options:nil
+                                        error:&error];
   if (error) {
     return nil;
   }
