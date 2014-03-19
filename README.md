@@ -36,7 +36,7 @@ All you need to do is create an entity type that conforms to this protocol
 @end
 ```
 
-and then define a contact manager to keep track of these entities
+and then use the JLCoreDataContactManager or define a contact manager to keep track of these entities yourself:
 
 ```objective-c
 @protocol JLContactManager<NSObject>
@@ -44,14 +44,12 @@ and then define a contact manager to keep track of these entities
 @required
 
 - (id<JLContact>)newContact;
-- (void)contactsUpdated:(NSArray *)contacts;
 - (NSArray *)existingContacts;
-- (BOOL)saveToDevice;
 
 @end
 ```
 
-then you utilize JLAddressBook to asynchronously update your core data contacts from the iphone address book
+then you utilize JLAddressBook update your core data contacts from the iphone address book
 
 ```objective-c
 @interface JLAddressBook : NSObject
@@ -61,11 +59,10 @@ then you utilize JLAddressBook to asynchronously update your core data contacts 
 - (BOOL)authorized;
 - (void)attemptToAuthorize:(AuthorizationBlock)block;
 
+- (NSArray *)syncContacts;
+
 - (UIImage *)photoForContact:(id<JLContact>)contact;
 - (UIImage *)thumbnailForContact:(id<JLContact>)contact;
-
-- (void)syncContacts;
-- (void)syncContactsAndThen:(SyncBlock)block;
 
 - (void)addContactToDevice:(id<JLContact>)contact;
 - (void)addContactToDevice:(id<JLContact>)contact withPhoto:(UIImage *)photo;
