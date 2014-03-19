@@ -15,7 +15,7 @@
 #define LOG_LEVEL_DEF JLAddressBookLogLevel
 
 #ifdef DEBUG
-static const int JLAddressBookLogLevel = LOG_LEVEL_VERBOSE;
+static const int JLAddressBookLogLevel = LOG_LEVEL_INFO;
 #else
 static const int JLAddressBookLogLevel = LOG_LEVEL_ERROR;
 #endif

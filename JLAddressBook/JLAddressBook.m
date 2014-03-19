@@ -14,7 +14,7 @@
 #define LOG_LEVEL_DEF JLAddressBookLogLevel
 
 #ifdef DEBUG
-static const int JLAddressBookLogLevel = LOG_LEVEL_VERBOSE;
+static const int JLAddressBookLogLevel = LOG_LEVEL_INFO;
 #else
 static const int JLAddressBookLogLevel = LOG_LEVEL_ERROR;
 #endif
@@ -161,8 +161,8 @@ static const int JLAddressBookLogLevel = LOG_LEVEL_ERROR;
                withArrayRef:linkedArrayRef
                   withCount:linkedCount];
     } else {
-      DDLogInfo(@"Adding %ld linked contacts to an existing contact",
-                (unsigned long)linkedCount);
+      DDLogVerbose(@"Adding %ld linked contacts to an existing contact",
+                   (unsigned long)linkedCount);
       [self populateContact:contact
                withArrayRef:linkedArrayRef
                   withCount:linkedCount];

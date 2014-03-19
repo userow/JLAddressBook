@@ -7,7 +7,7 @@
 //
 
 #import "Contact.h"
-#import "JLAddressBook.h"
+#import "JLContact.h"
 
 @interface ImageToDataTransformer : NSValueTransformer
 
