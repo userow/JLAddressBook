@@ -49,7 +49,7 @@ and then use the JLCoreDataContactManager or define a contact manager to keep tr
 @end
 ```
 
-then you utilize JLAddressBook update your core data contacts from the iphone address book
+then you utilize JLAddressBook syncContacts to update your core data contacts from the iphone address book
 
 ```objective-c
 @interface JLAddressBook : NSObject
