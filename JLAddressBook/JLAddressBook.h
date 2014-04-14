@@ -26,8 +26,8 @@ typedef void (^AuthorizationBlock)(bool granted, NSError *error);
 
 - (instancetype)initWithContactManager:(id<JLContactManager>)contactManager;
 
-- (BOOL)authorized;
-- (void)attemptToAuthorize:(AuthorizationBlock)block;
++ (BOOL)authorized;
++ (void)attemptToAuthorize:(AuthorizationBlock)block;
 
 // If your ContactManager defines existing contacts, the information in your
 // existing contacts will be updated to match what is in the device contacts

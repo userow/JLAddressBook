@@ -23,12 +23,23 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
 
+  [JLAddressBook attemptToAuthorize:^(bool granted, NSError *error) {
+      if (granted) {
+        dispatch_async(dispatch_get_main_queue(), ^{ [self loadData]; });
+      } else {
+        NSLog(@"User denied contact access %@", error);
+      }
+  }];
+}
+
+- (void)loadData {
   JLDataManager *dataManager = [JLDataManager sharedInstance];
   [dataManager reset];
 
   JLCoreDataContactManager *contactManager = [[JLCoreDataContactManager alloc]
       initWithEntityName:[Contact entityName]
                inContext:dataManager.managedObjectContext];
+
   self.addressBook =
       [[JLAddressBook alloc] initWithContactManager:contactManager];
 
@@ -46,18 +57,9 @@
         sectionNameKeyPath:nil
                  cacheName:nil];
 
-  [self.addressBook attemptToAuthorize:^(bool granted, NSError *error) {
-      if (granted) {
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [self.addressBook syncContacts];
-            [dataManager save];
-            [self.tableView reloadData];
-        });
-
-      } else {
-        NSLog(@"User denied contact access %@", error);
-      }
-  }];
+  [self.addressBook syncContacts];
+  [dataManager save];
+  [self.tableView reloadData];
 }
 
 #pragma mark - CoreDataTableViewController

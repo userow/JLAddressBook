@@ -57,11 +57,12 @@ static const int JLAddressBookLogLevel = LOG_LEVEL_ERROR;
   CFRelease(self.addressBook);
 }
 
-- (BOOL)authorized {
++ (BOOL)authorized {
   return ABAddressBookGetAuthorizationStatus() ==
          kABAuthorizationStatusAuthorized;
 }
-- (void)attemptToAuthorize:(AuthorizationBlock)block {
+
++ (void)attemptToAuthorize:(AuthorizationBlock)block {
   ABAuthorizationStatus status = ABAddressBookGetAuthorizationStatus();
 
   switch (status) {
@@ -69,8 +70,9 @@ static const int JLAddressBookLogLevel = LOG_LEVEL_ERROR;
       block(true, nil);
     } break;
     case kABAuthorizationStatusNotDetermined: {
+      ABAddressBookRef addressBook = ABAddressBookCreateWithOptions(NULL, NULL);
       ABAddressBookRequestAccessWithCompletion(
-          self.addressBook, ^(bool granted, CFErrorRef error) {
+          addressBook, ^(bool granted, CFErrorRef error) {
               if (granted) {
                 block(true, nil);
               } else {
@@ -97,7 +99,7 @@ static const int JLAddressBookLogLevel = LOG_LEVEL_ERROR;
 }
 
 - (NSArray *)syncContacts {
-  if (![self authorized]) return nil;
+  if (![JLAddressBook authorized]) return nil;
 
   NSArray *existingContacts = self.contactManager.existingContacts;
 
@@ -338,7 +340,7 @@ static const int JLAddressBookLogLevel = LOG_LEVEL_ERROR;
 }
 
 - (UIImage *)imageAs:(BOOL)thumbnail forContact:(id<JLContact>)contact {
-  if (![self authorized] ||
+  if (![JLAddressBook authorized] ||
       ![contact respondsToSelector:@selector(addressBookIDs)]) {
     return nil;
   }

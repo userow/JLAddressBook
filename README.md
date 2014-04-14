@@ -56,8 +56,8 @@ then you utilize JLAddressBook syncContacts to update your core data contacts fr
 
 - (instancetype)initWithContactManager:(id<JLContactManager>)contactManager;
 
-- (BOOL)authorized;
-- (void)attemptToAuthorize:(AuthorizationBlock)block;
++ (BOOL)authorized;
++ (void)attemptToAuthorize:(AuthorizationBlock)block;
 
 - (NSArray *)syncContacts;
 
