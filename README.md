@@ -84,7 +84,7 @@ Here is a list of iPhone apps utilizing this library:
 
 JLAddressBook is available under the MIT license. See the LICENSE file for more info.
 
-[Joe Laws]:https://www.linkedin.com/in/josephcharleslaws/
+[Joe Laws]:https://angel.co/joe-laws
 [@JosephCLaws]:https://twitter.com/JosephCLaws
 [Seer Reminders]:https://itunes.apple.com/us/app/seer-reminders/id721450216?ls=1&mt=8
 [Seer Homepage]:http://getseer.com
