@@ -16,7 +16,7 @@ it simply add the following line to your Podfile:
 
 ## Usage
 
-To run the example project; clone the repo, run `pod install`, then open the JLAddressBookExample.xcworkspace.
+To run the example project; clone the repo, run `pod install`, then open JLAddressBookExample.xcworkspace.
 
 All you need to do is create an entity type that conforms to this protocol
 
@@ -49,7 +49,7 @@ and then use the JLCoreDataContactManager or define a contact manager to keep tr
 @end
 ```
 
-then you utilize JLAddressBook syncContacts to update your core data contacts from the iphone address book
+then you call JLAddressBook syncContacts to update your contacts from the iphone address book
 
 ```objective-c
 @interface JLAddressBook : NSObject
