@@ -8,17 +8,7 @@
 
 #import "JLCoreDataContactManager.h"
 #import "JLAddressBook.h"
-#import "DDLog.h"
 @import CoreData;
-
-#undef LOG_LEVEL_DEF
-#define LOG_LEVEL_DEF JLAddressBookLogLevel
-
-#ifdef DEBUG
-static const int JLAddressBookLogLevel = LOG_LEVEL_INFO;
-#else
-static const int JLAddressBookLogLevel = LOG_LEVEL_ERROR;
-#endif
 
 @interface JLCoreDataContactManager ()
 @property(strong, nonatomic) NSString *entityName;
@@ -54,7 +44,7 @@ static const int JLAddressBookLogLevel = LOG_LEVEL_ERROR;
       [self.managedObjectContext executeFetchRequest:request error:&error];
 
   if (error) {
-    DDLogError(@"Error %@ while fetching %@ ", [error description], request);
+    NSLog(@"Error %@ while fetching %@ ", [error description], request);
   }
   return results;
 }

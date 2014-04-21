@@ -7,17 +7,7 @@
 //
 
 #import "JLAddressBook.h"
-#import "DDLog.h"
 @import AddressBook;
-
-#undef LOG_LEVEL_DEF
-#define LOG_LEVEL_DEF JLAddressBookLogLevel
-
-#ifdef DEBUG
-static const int JLAddressBookLogLevel = LOG_LEVEL_INFO;
-#else
-static const int JLAddressBookLogLevel = LOG_LEVEL_ERROR;
-#endif
 
 @interface JLAddressBook ()
 @property(nonatomic, strong) NSRegularExpression *regex;
@@ -37,14 +27,14 @@ static const int JLAddressBookLogLevel = LOG_LEVEL_ERROR;
                                error:&error];
 
     if (error) {
-      DDLogError(@"Failed to instantiate the regex parser");
+      NSLog(@"Failed to instantiate the regex parser");
       return nil;
     }
 
     self.addressBook = ABAddressBookCreateWithOptions(NULL, NULL);
 
     if (!self.addressBook) {
-      DDLogError(@"Failed to instantiate an ABAddressBook");
+      NSLog(@"Failed to instantiate an ABAddressBook");
       return nil;
     }
 
@@ -156,15 +146,11 @@ static const int JLAddressBookLogLevel = LOG_LEVEL_ERROR;
     }
 
     if (!contact) {
-      DDLogInfo(@"Creating a new contact from %ld linked contacts",
-                (unsigned long)linkedCount);
       contact = [self.contactManager newContact];
       [self populateContact:contact
                withArrayRef:linkedArrayRef
                   withCount:linkedCount];
     } else {
-      DDLogVerbose(@"Adding %ld linked contacts to an existing contact",
-                   (unsigned long)linkedCount);
       [self populateContact:contact
                withArrayRef:linkedArrayRef
                   withCount:linkedCount];
@@ -193,8 +179,6 @@ static const int JLAddressBookLogLevel = LOG_LEVEL_ERROR;
 }
 
 - (void)addContactToDevice:(id<JLContact>)contact withPhoto:(UIImage *)photo {
-  DDLogInfo(@"Adding contact to device %@", contact);
-
   ABRecordRef record = ABPersonCreate();
 
   if ([contact respondsToSelector:@selector(firstName)]) {
