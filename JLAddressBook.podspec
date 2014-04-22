@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = "JLAddressBook"
-  s.version          = "1.2.2"
+  s.version          = "1.2.3"
   s.summary          = "An iOS ABAddressBook wrapper."
   s.description      = <<-DESC
                        An iOS ABAddressBook wrapper to easily map contacts to CoreData (or any class) entities.
