@@ -16,6 +16,7 @@
 @property(nonatomic, strong) NSString *lastName;
 @property(nonatomic, strong) NSString *fullName;
 @property(nonatomic, strong) NSArray *phoneNumbers;    // NSString's
+@property(nonatomic, strong) NSArray *labels;    // NSString's
 @property(nonatomic, strong) NSArray *emails;          // NSString's
 @property(nonatomic, strong) NSArray *addressBookIDs;  // NSNumbers's
 @property(nonatomic, strong) UIImage *thumbnail;

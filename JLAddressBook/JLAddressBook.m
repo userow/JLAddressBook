@@ -204,10 +204,15 @@
   if ([contact respondsToSelector:@selector(phoneNumbers)]) {
     ABMutableMultiValueRef multiPhones =
         ABMultiValueCreateMutable(kABStringPropertyType);
-    for (NSString *phoneNumber in contact.phoneNumbers) {
-      ABMultiValueAddValueAndLabel(
-          multiPhones, (__bridge CFTypeRef)(phoneNumber), kABHomeLabel, NULL);
-    }
+      for (int i = 0; i < [contact.phoneNumbers count]; ++i) {
+          CFStringRef label = kABHomeLabel;
+          if ([contact.labels count] > i) {
+              label = (__bridge CFStringRef)(contact.labels[i]);
+          }
+          ABMultiValueAddValueAndLabel(
+                                       multiPhones, (__bridge CFTypeRef)(contact.phoneNumbers[i]), label, NULL);
+          CFRelease(label);
+      }
     ABRecordSetValue(record, kABPersonPhoneProperty, multiPhones, NULL);
   }
 
