@@ -235,96 +235,109 @@
 - (void)populateContact:(id<JLContact>)contact
            withArrayRef:(CFArrayRef)linkedArrayRef
               withCount:(NSUInteger)linkedCount {
-
-  NSMutableSet *phoneNumbers = [NSMutableSet new];
-  NSMutableSet *emails = [NSMutableSet new];
-  NSMutableSet *addressBookIDs = [NSMutableSet new];
-
-  for (NSUInteger i = 0; i < linkedCount; i++) {
-    ABRecordRef recordRef = CFArrayGetValueAtIndex(linkedArrayRef, i);
-
-    if ([contact respondsToSelector:@selector(setFirstName:)]) {
-      if (!contact.firstName || [contact.firstName length] == 0) {
-        contact.firstName = [self stringProperty:kABPersonFirstNameProperty
-                                      fromRecord:recordRef];
-        if (!contact.firstName) contact.firstName = @"";
-      }
-    }
-
-    if ([contact respondsToSelector:@selector(setLastName:)]) {
-      if (!contact.lastName || [contact.lastName length] == 0) {
-        contact.lastName = [self stringProperty:kABPersonLastNameProperty
-                                     fromRecord:recordRef];
-        if (!contact.lastName) contact.lastName = @"";
-      }
-    }
-
-    if ([contact respondsToSelector:@selector(setFullName:)]) {
-      if (!contact.fullName || [contact.fullName length] == 0) {
-        NSString *lastName = [self stringProperty:kABPersonLastNameProperty
-                                       fromRecord:recordRef];
-
-        NSString *firstName = [self stringProperty:kABPersonFirstNameProperty
-                                        fromRecord:recordRef];
-
-        if ([firstName length] > 0 && [lastName length] > 0) {
-          contact.fullName =
-              [NSString stringWithFormat:@"%@ %@", firstName, lastName];
-        } else if ([firstName length] > 0) {
-          contact.fullName = firstName;
-        } else if ([lastName length] > 0) {
-          contact.fullName = lastName;
-        } else {
-          contact.fullName = @"NO NAME";
+    
+    NSMutableSet *phoneNumbers = [NSMutableSet new];
+    NSMutableSet *emails = [NSMutableSet new];
+    NSMutableSet *addressBookIDs = [NSMutableSet new];
+    
+    for (NSUInteger i = 0; i < linkedCount; i++) {
+        ABRecordRef recordRef = CFArrayGetValueAtIndex(linkedArrayRef, i);
+        
+        if ([contact respondsToSelector:@selector(setFirstName:)]) {
+            if (!contact.firstName || [contact.firstName length] == 0) {
+                contact.firstName = [self stringProperty:kABPersonFirstNameProperty
+                                              fromRecord:recordRef];
+                if (!contact.firstName) contact.firstName = @"";
+            }
         }
-      }
+        
+        if ([contact respondsToSelector:@selector(setLastName:)]) {
+            if (!contact.lastName || [contact.lastName length] == 0) {
+                contact.lastName = [self stringProperty:kABPersonLastNameProperty
+                                             fromRecord:recordRef];
+                if (!contact.lastName) contact.lastName = @"";
+            }
+        }
+        
+        if ([[contact.firstName stringByAppendingString:contact.lastName] length] < 1 && [self stringProperty:kABPersonOrganizationProperty
+                                                                                                   fromRecord:recordRef]) {
+            contact.firstName = [self stringProperty:kABPersonOrganizationProperty
+                                          fromRecord:recordRef];
+            
+        }
+        
+        if ([contact respondsToSelector:@selector(setFullName:)]) {
+            if (!contact.fullName || [contact.fullName length] == 0) {
+                NSString *lastName = [self stringProperty:kABPersonLastNameProperty
+                                               fromRecord:recordRef];
+                
+                NSString *firstName = [self stringProperty:kABPersonFirstNameProperty
+                                                fromRecord:recordRef];
+                
+                
+                NSString *company = [self stringProperty:kABPersonOrganizationProperty
+                                              fromRecord:recordRef];
+                
+                if ([firstName length] > 0 && [lastName length] > 0) {
+                    contact.fullName =
+                    [NSString stringWithFormat:@"%@ %@", firstName, lastName];
+                } else if ([firstName length] > 0) {
+                    contact.fullName = firstName;
+                } else if ([lastName length] > 0) {
+                    contact.fullName = lastName;
+                } else if ([company length] > 0) {
+                    contact.fullName = company;
+                } else {
+                    contact.fullName = @"NO NAME";
+                }
+            }
+        }
+        
+        if ([contact respondsToSelector:@selector(setPhoneNumbers:)]) {
+            NSArray *newPhones =
+            [self arrayProperty:kABPersonPhoneProperty fromRecord:recordRef];
+            [phoneNumbers addObjectsFromArray:newPhones];
+        }
+        
+        if ([contact respondsToSelector:@selector(setEmails:)]) {
+            NSArray *newEmails =
+            [self arrayProperty:kABPersonEmailProperty fromRecord:recordRef];
+            [emails addObjectsFromArray:newEmails];
+        }
+        
+        NSNumber *recordID = @(ABRecordGetRecordID(recordRef));
+        
+        if ([contact respondsToSelector:@selector(addressBookIDs)]) {
+            [addressBookIDs addObject:recordID];
+        }
+        
+        if ([contact respondsToSelector:@selector(setPhoto:)]) {
+            if (!contact.photo) {
+                contact.photo = [self imagePropertyFromRecord:recordRef asThumbnail:NO];
+            }
+        }
+        
+        if ([contact respondsToSelector:@selector(setThumbnail:)]) {
+            if (!contact.thumbnail) {
+                contact.thumbnail =
+                [self imagePropertyFromRecord:recordRef asThumbnail:YES];
+            }
+        }
     }
-
-    if ([contact respondsToSelector:@selector(setPhoneNumbers:)]) {
-      NSArray *newPhones =
-          [self arrayProperty:kABPersonPhoneProperty fromRecord:recordRef];
-      [phoneNumbers addObjectsFromArray:newPhones];
+    
+    if ([contact respondsToSelector:@selector(setPhoneNumbers:)] &&
+        [phoneNumbers count] > 0) {
+        contact.phoneNumbers = [self cleanPhoneNumbers:phoneNumbers];
     }
-
-    if ([contact respondsToSelector:@selector(setEmails:)]) {
-      NSArray *newEmails =
-          [self arrayProperty:kABPersonEmailProperty fromRecord:recordRef];
-      [emails addObjectsFromArray:newEmails];
+    
+    if ([contact respondsToSelector:@selector(setEmails:)] &&
+        [emails count] > 0) {
+        contact.emails = [self cleanEmails:emails];
     }
-
-    NSNumber *recordID = @(ABRecordGetRecordID(recordRef));
-
-    if ([contact respondsToSelector:@selector(addressBookIDs)]) {
-      [addressBookIDs addObject:recordID];
+    
+    if ([contact respondsToSelector:@selector(setAddressBookIDs:)]) {
+        contact.addressBookIDs = [addressBookIDs allObjects];
     }
-
-    if ([contact respondsToSelector:@selector(setPhoto:)]) {
-      if (!contact.photo) {
-        contact.photo = [self imagePropertyFromRecord:recordRef asThumbnail:NO];
-      }
-    }
-
-    if ([contact respondsToSelector:@selector(setThumbnail:)]) {
-      if (!contact.thumbnail) {
-        contact.thumbnail =
-            [self imagePropertyFromRecord:recordRef asThumbnail:YES];
-      }
-    }
-  }
-
-  if ([contact respondsToSelector:@selector(setPhoneNumbers:)] &&
-      [phoneNumbers count] > 0) {
-    contact.phoneNumbers = [self cleanPhoneNumbers:phoneNumbers];
-  }
-
-  if ([contact respondsToSelector:@selector(setEmails:)] &&
-      [emails count] > 0) {
-    contact.emails = [self cleanEmails:emails];
-  }
-
-  if ([contact respondsToSelector:@selector(setAddressBookIDs:)]) {
-    contact.addressBookIDs = [addressBookIDs allObjects];
-  }
 }
 
 - (NSArray *)cleanEmails:(NSSet *)emails {
