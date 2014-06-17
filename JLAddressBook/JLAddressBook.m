@@ -22,7 +22,7 @@
   if (self) {
     NSError *error = nil;
     self.regex = [NSRegularExpression
-        regularExpressionWithPattern:@"[^\\d]"
+        regularExpressionWithPattern:@"[^\+\\d]"
                              options:NSRegularExpressionCaseInsensitive
                                error:&error];
 
