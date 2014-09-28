@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 Joe Laws. All rights reserved.
 //
 
-@import Foundation;
+#import <Foundation/Foundation.h>
 
 @protocol JLContact<NSObject>
 
