@@ -7,7 +7,7 @@
 //
 
 #import "JLViewController.h"
-#import "Contact+Extension.h"
+#import "AddressBookContact+Extension.h"
 #import "JLDataManager.h"
 #import "JLAddressBook.h"
 #import "JLCoreDataContactManager.h"
@@ -37,14 +37,14 @@
   [dataManager reset];
 
   JLCoreDataContactManager *contactManager = [[JLCoreDataContactManager alloc]
-      initWithEntityName:[Contact entityName]
+      initWithEntityName:[AddressBookContact entityName]
                inContext:dataManager.managedObjectContext];
 
   self.addressBook =
       [[JLAddressBook alloc] initWithContactManager:contactManager];
 
   NSFetchRequest *request =
-      [NSFetchRequest fetchRequestWithEntityName:[Contact entityName]];
+      [NSFetchRequest fetchRequestWithEntityName:[AddressBookContact entityName]];
   request.sortDescriptors = @[
     [NSSortDescriptor sortDescriptorWithKey:@"lastName"
                                   ascending:YES
@@ -71,10 +71,10 @@
       [self.tableView dequeueReusableCellWithIdentifier:@"ContactCell"
                                            forIndexPath:indexPath];
 
-  Contact *contact =
+  AddressBookContact *contact =
       [self.fetchedResultsController objectAtIndexPath:indexPath];
   cell.textLabel.text = contact.fullName;
-  cell.detailTextLabel.text = [contact.emails firstObject];
+  cell.detailTextLabel.text = [contact.phoneNumbers componentsJoinedByString:@", "];
   [cell.imageView setImage:contact.thumbnail];
   return cell;
 }

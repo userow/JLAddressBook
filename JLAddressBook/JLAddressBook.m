@@ -115,7 +115,17 @@
 
   for (NSUInteger i = 0; i < contactCount; i++) {
     ABRecordRef originalRef = CFArrayGetValueAtIndex(peopleArrayRef, i);
+    //Added contacts with no phone numbers filtering
+    //Get only records with PHONES
+    ABMultiValueRef phones = ABRecordCopyValue(originalRef, kABPersonPhoneProperty);
 
+    if (phones == NULL || ABMultiValueGetCount(phones) == 0) {
+        NSLog(@"skipping entry without phones");
+        if (phones != NULL) CFRelease(phones);
+        continue;
+     }
+    NSLog(@"parsing entry with phones");
+      
     if ([linkedPeopleToSkip
             containsObject:@(ABRecordGetRecordID(originalRef))]) {
       continue;
@@ -293,9 +303,14 @@
             }
         }
         
+        //TODO: Modification - setting phoneNumberTypes altogether with phoneNumbers, decoded, localized
         if ([contact respondsToSelector:@selector(setPhoneNumbers:)]) {
             NSArray *newPhones =
             [self arrayProperty:kABPersonPhoneProperty fromRecord:recordRef];
+            
+            NSString * phones = (__bridge_transfer NSString *)ABRecordCopyValue(recordRef, kABPersonPhoneProperty);
+            NSLog(@"\n-----------------\n%@\n-----------------", phones);
+            
             [phoneNumbers addObjectsFromArray:newPhones];
         }
         

@@ -6,12 +6,14 @@
 //  Copyright (c) 2014 Joe Laws. All rights reserved.
 //
 
-#import "Contact.h"
+#import "AddressBookContact.h"
 
 
-@implementation Contact
+@implementation AddressBookContact
 
 @dynamic emails;
+@dynamic phoneNumbers;
+@dynamic phoneNumberTypes;
 @dynamic firstName;
 @dynamic lastName;
 @dynamic thumbnail;

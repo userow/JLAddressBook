@@ -10,9 +10,11 @@
 #import <CoreData/CoreData.h>
 
 
-@interface Contact : NSManagedObject
+@interface AddressBookContact : NSManagedObject
 
 @property (nonatomic, retain) id emails;
+@property (nonatomic, retain) id phoneNumbers;
+@property (nonatomic, retain) id phoneNumberTypes;
 @property (nonatomic, retain) NSString * firstName;
 @property (nonatomic, retain) NSString * lastName;
 @property (nonatomic, retain) id thumbnail;
