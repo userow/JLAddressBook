@@ -123,7 +123,7 @@
         NSLog(@"skipping entry without phones");
         if (phones != NULL) CFRelease(phones);
         continue;
-     }
+    }
     NSLog(@"parsing entry with phones");
       
     if ([linkedPeopleToSkip
@@ -305,14 +305,44 @@
         
         //TODO: Modification - setting phoneNumberTypes altogether with phoneNumbers, decoded, localized
         if ([contact respondsToSelector:@selector(setPhoneNumbers:)]) {
-            NSArray *newPhones =
-            [self arrayProperty:kABPersonPhoneProperty fromRecord:recordRef];
-            
+            //Logging phones
             NSString * phones = (__bridge_transfer NSString *)ABRecordCopyValue(recordRef, kABPersonPhoneProperty);
             NSLog(@"\n-----------------\n%@\n-----------------", phones);
             
-            [phoneNumbers addObjectsFromArray:newPhones];
+            NSUInteger phoneCounter = 0;
+            ABMultiValueRef phonesRef = ABRecordCopyValue(recordRef, kABPersonPhoneProperty);
+            
+            NSMutableArray *newPhones = [NSMutableArray array];
+            NSMutableArray *newLabels = [NSMutableArray array];
+            for (phoneCounter = 0; phoneCounter < ABMultiValueGetCount(phonesRef); phoneCounter++)
+            {
+                
+                NSString *phoneLabel = (__bridge_transfer NSString *)
+                ABMultiValueCopyLabelAtIndex(phonesRef, phoneCounter);
+                
+                // Get the phone type
+                NSString *localizedPhoneLabel = (__bridge_transfer NSString*)
+                ABAddressBookCopyLocalizedLabel((__bridge CFStringRef)phoneLabel);
+                
+                // And then get the phone itself
+                NSString *phone = (__bridge_transfer NSString *)
+                ABMultiValueCopyValueAtIndex(phonesRef, phoneCounter);
+                
+                [newPhones addObject:phone];
+                [newLabels addObject:localizedPhoneLabel];
+                
+                NSLog(@"\n\nAdded:\n %@ : %@", localizedPhoneLabel, phone);
+                
+            }
+            
+            if ([contact respondsToSelector:@selector(setLabels:)]) {
+                contact.labels = [newLabels copy];
+            }
+            
+            contact.phoneNumbers = [newPhones copy];
         }
+
+        
         
         if ([contact respondsToSelector:@selector(setEmails:)]) {
             NSArray *newEmails =
@@ -340,10 +370,10 @@
         }
     }
     
-    if ([contact respondsToSelector:@selector(setPhoneNumbers:)] &&
-        [phoneNumbers count] > 0) {
-        contact.phoneNumbers = [self cleanPhoneNumbers:phoneNumbers];
-    }
+//    if ([contact respondsToSelector:@selector(setPhoneNumbers:)] &&
+//        [phoneNumbers count] > 0) {
+//        contact.phoneNumbers = [self cleanPhoneNumbers:phoneNumbers];
+//    }
     
     if ([contact respondsToSelector:@selector(setEmails:)] &&
         [emails count] > 0) {

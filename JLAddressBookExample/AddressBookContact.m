@@ -13,7 +13,7 @@
 
 @dynamic emails;
 @dynamic phoneNumbers;
-@dynamic phoneNumberTypes;
+@dynamic labels;
 @dynamic firstName;
 @dynamic lastName;
 @dynamic thumbnail;
