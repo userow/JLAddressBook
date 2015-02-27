@@ -11,6 +11,7 @@
 
 @implementation AddressBookContact
 
+@dynamic addressBookIDs;
 @dynamic emails;
 @dynamic phoneNumbers;
 @dynamic labels;

@@ -12,6 +12,7 @@
 
 @interface AddressBookContact : NSManagedObject
 
+@property (nonatomic, retain) id addressBookIDs;
 @property (nonatomic, retain) id emails;
 @property (nonatomic, retain) id phoneNumbers;
 @property (nonatomic, retain) id labels;
